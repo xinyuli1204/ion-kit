@@ -11,9 +11,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-   
-      - name: Get latest CMake
-        uses: lukka/get-cmake@latest
 
       - name: Setup dependencies
         shell: bash
@@ -26,7 +23,10 @@ jobs:
           mv Halide*/* ${HOME}/Halide
           # zlib, libjpeg, libpng
           vcpkg install --triplet=x64-windows-static
-      
+         
+      - name: Get latest CMake
+        uses: lukka/get-cmake@latest
+
       - name: Setup msbuild
         uses: microsoft/setup-msbuild@v1
 
