@@ -23,11 +23,7 @@ jobs:
 
       - name: Check PowerShell version
         run: |
-          vcpkg install  --triplet=x64-windows-static
-          git clone https://github.com/microsoft/vcpkg.git
-          cd vcpkg
-          .\bootstrap-vcpkg.bat  && cd ../
-          ${{ github.workspace }}\vcpkg\vcpkg.exe install  --triplet=x64-windows-static
-          
+          git clone https://github.com/microsoft/vcpkg.git && .\vcpkg\bootstrap-vcpkg.bat
+          ${{ github.workspace }}\vcpkg\vcpkg.exe install --triplet=x64-windows-static
           
           
