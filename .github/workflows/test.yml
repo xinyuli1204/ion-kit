@@ -14,9 +14,6 @@ jobs:
 
       - name: Get latest CMake
         uses: lukka/get-cmake@latest
-        with:
-          cmakeVersion: "~3"  # <--= optional, use most recent 3.25.x version
-          ninjaVersion: "^1.11.0"  # <--= optional, use most recent 1.x version
 
 
       - name: Setup msbuild
@@ -26,13 +23,8 @@ jobs:
       - name: Setup dependencies
         shell: bash
         run: |
-          # Halide
-          mkdir ${HOME}/Halide
-          curl -L https://github.com/halide/Halide/releases/download/v17.0.1/Halide-17.0.1-x86-64-windows-52541176253e74467dabc42eeee63d9a62c199f6.zip -o Halide.zip
-          unzip Halide.zip
-          rm Halide.zip
-          mv Halide*/* ${HOME}/Halide
           # zlib, libjpeg, libpng
+          vcpkg update
           vcpkg install --triplet=x64-windows-static
          
 
