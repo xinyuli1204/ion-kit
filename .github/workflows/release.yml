@@ -89,7 +89,7 @@ jobs:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   release-macos:
-    runs-on: macos-latest-xlarge
+    runs-on: macos-latest
 
     steps:
       - uses: actions/checkout@v4
