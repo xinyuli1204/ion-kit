@@ -14,11 +14,12 @@ jobs:
 
       - name: Check PowerShell version
         run: |
-          git clone https://github.com/microsoft/vcpkg.git
-          cd vcpkg
-          git checkout 2024.09.30
-          .\bootstrap-vcpkg.bat  && cd ../
-          ${{ github.workspace }}\vcpkg\vcpkg.exe install
+          vcpkg install
+          # git clone https://github.com/microsoft/vcpkg.git
+          # cd vcpkg
+          # git checkout 2024.09.30
+          # .\bootstrap-vcpkg.bat  && cd ../
+          # ${{ github.workspace }}\vcpkg\vcpkg.exe install
           
           
           
