@@ -19,23 +19,15 @@ jobs:
       - name: Setup msbuild
         uses: microsoft/setup-msbuild@v1
 
-      
-      - name: Setup dependencies
-        shell: bash
-        run: |
-          # zlib, libjpeg, libpng
-          vcpkg update
-          vcpkg install --triplet=x64-windows-static
-         
+
 
       - name: Check PowerShell version
         run: |
-          vcpkg install --triplet=x64-windows-static
-          # git clone https://github.com/microsoft/vcpkg.git
-          # cd vcpkg
-          # git checkout 2024.09.30
-          # .\bootstrap-vcpkg.bat  && cd ../
-          # ${{ github.workspace }}\vcpkg\vcpkg.exe install
+
+          git clone https://github.com/microsoft/vcpkg.git
+          cd vcpkg
+          .\bootstrap-vcpkg.bat  && cd ../
+          ${{ github.workspace }}\vcpkg\vcpkg.exe install
           
           
           
