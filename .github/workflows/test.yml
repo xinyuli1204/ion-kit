@@ -25,7 +25,7 @@ jobs:
         shell: bash
         run: |
           git clone https://github.com/microsoft/vcpkg.git && ./vcpkg/bootstrap-vcpkg.bat
-          ${{ github.workspace }}/vcpkg/vcpkg install
+          vcpkg/vcpkg.exe install
 
 
   build-and-test:
