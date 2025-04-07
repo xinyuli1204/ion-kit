@@ -25,7 +25,7 @@ jobs:
         shell: bash
         run: |
           git clone https://github.com/microsoft/vcpkg.git && ./vcpkg/bootstrap-vcpkg.bat
-          ${{ github.workspace }}/vcpkg/vcpkg.exe install --triplet=x64-windows-static
+          ${{ github.workspace }}/vcpkg/vcpkg install
 
 
   build-and-test:
