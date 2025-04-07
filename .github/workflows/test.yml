@@ -7,19 +7,18 @@ on:
 
 jobs:
   check-vcpkg:
-    runs-on: ubuntu-20.04
+    runs-on: windows-2022
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Check PowerShell version
         run: |
-          vcpkg install
-          # git clone https://github.com/microsoft/vcpkg.git
-          # cd vcpkg
-          # git checkout 2024.09.30
-          # sudo bash bootstrap-vcpkg.sh  && cd ../
-          # ${{ github.workspace }}/vcpkg/vcpkg install
+          git clone https://github.com/microsoft/vcpkg.git
+          cd vcpkg
+          git checkout 2024.09.30
+          .\bootstrap-vcpkg.bat  && cd ../
+          ${{ github.workspace }}\vcpkg\vcpkg.exe install
           
           
           
