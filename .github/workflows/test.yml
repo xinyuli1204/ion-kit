@@ -12,6 +12,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Get latest CMake
+        uses: lukka/get-cmake@latest
+        with:
+          cmakeVersion: "~3.31.0"  # <--= optional, use most recent 3.25.x version
+          ninjaVersion: "^1.11.0"  # <--= optional, use most recent 1.x version
+
+
+      - name: Setup msbuild
+        uses: microsoft/setup-msbuild@v1
+
+      
       - name: Setup dependencies
         shell: bash
         run: |
@@ -24,11 +35,6 @@ jobs:
           # zlib, libjpeg, libpng
           vcpkg install --triplet=x64-windows-static
          
-      - name: Get latest CMake
-        uses: lukka/get-cmake@latest
-
-      - name: Setup msbuild
-        uses: microsoft/setup-msbuild@v1
 
       - name: Check PowerShell version
         run: |
