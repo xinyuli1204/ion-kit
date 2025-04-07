@@ -7,7 +7,7 @@ on:
 
 jobs:
   check-vcpkg:
-    runs-on: windows-2022
+    runs-on: windows-2019
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
