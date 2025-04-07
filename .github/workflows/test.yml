@@ -15,7 +15,7 @@ jobs:
       - name: Get latest CMake
         uses: lukka/get-cmake@latest
         with:
-          cmakeVersion: "~3.31.0"  # <--= optional, use most recent 3.25.x version
+          cmakeVersion: "~3"  # <--= optional, use most recent 3.25.x version
           ninjaVersion: "^1.11.0"  # <--= optional, use most recent 1.x version
 
 
