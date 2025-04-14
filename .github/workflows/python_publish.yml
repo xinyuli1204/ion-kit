@@ -9,10 +9,9 @@
 name: Upload Python Package
 
 on:
-  workflow_run:
-    workflows: ["Release"]  # The upstream workflow name
-    types:
-      - completed
+  repository_dispatch:
+    types: [my-event]
+
 jobs:
   build_ion_python_wheels:
     name: Build wheels on ${{ matrix.os }}
