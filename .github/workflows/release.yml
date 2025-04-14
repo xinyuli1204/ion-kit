@@ -47,6 +47,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+    outputs:
+      ION_KIT_VERSION: ${{ github.ref_name }}
+      # MY_VAR: some_value
+
   release-windows:
     runs-on: windows-2019
 
