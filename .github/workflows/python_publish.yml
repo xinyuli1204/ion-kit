@@ -36,8 +36,8 @@ jobs:
           latest: false
           fileName: "ion-kit*"
           tag: ${{ github.event.release.tag_name }}
-          timeout-minutes: 5
-          continue-on-error: false
+        timeout-minutes: 5
+        continue-on-error: false
 
 
       - name: Copy macos file
