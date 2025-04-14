@@ -34,7 +34,7 @@ jobs:
         with:
           latest: false
           fileName: "ion-kit*"
-          tag: {{ github.event.client_payload.ION_KIT_VERSION }}
+          tag: ${{ github.event.client_payload.ION_KIT_VERSION }}
 
 
       - name: Copy macos file
@@ -85,7 +85,7 @@ jobs:
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: ""
           CIBW_SKIP: "*-win32 *i686 *musllinux*"
           CIBW_BUILD: cp39-*
-          CIBW_ENVIRONMENT: ION_KIT_VERSION={{ github.event.client_payload.ION_KIT_VERSION }}
+          CIBW_ENVIRONMENT: ION_KIT_VERSION=${{ github.event.client_payload.ION_KIT_VERSION }}
 
 
       - uses: actions/upload-artifact@v4
@@ -114,7 +114,7 @@ jobs:
         with:
           latest: true
           fileName: "ion-kit*"
-          tag: {{ github.event.client_payload.ION_KIT_VERSION }}
+          tag: ${{ github.event.client_payload.ION_KIT_VERSION }}
 
       - name: Copy macos file
         if: runner.os == 'macOS'
@@ -181,7 +181,7 @@ jobs:
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: ""
           CIBW_SKIP: "*-win32 *i686 *musllinux*"
           CIBW_BUILD: cp39-*
-          CIBW_ENVIRONMENT: ION_KIT_VERSION={{ github.event.client_payload.ION_KIT_VERSION }} USE_CONTRIB=TRUE
+          CIBW_ENVIRONMENT: ION_KIT_VERSION=${{ github.event.client_payload.ION_KIT_VERSION }} USE_CONTRIB=TRUE
 
       - uses: actions/upload-artifact@v4
         with:
