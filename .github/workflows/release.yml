@@ -10,13 +10,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - name: Repository Dispatch
-        uses: peter-evans/repository-dispatch@v3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          repository: xinyuli1204/ion-kit
-          event-type: my-event
-          client-payload: '{"ION_KIT_VERSION": "1.0.0"}'
+ 
           
 
   release-windows:
@@ -25,27 +19,29 @@ jobs:
     steps:
       - uses: actions/checkout@v4
             
-      - name: Repository Dispatch
-        uses: peter-evans/repository-dispatch@v3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          repository: xinyuli1204/ion-kit
-          event-type: my-event
-          client-payload: '{"ION_KIT_VERSION": "1.0.0"}'
-          
+
 
   release-macos:
     runs-on: macos-latest
 
     steps:
       - uses: actions/checkout@v4
-      
+
+
+
+  dispatch:
+    runs-on: ubuntu-20.04
+    needs: [release-macos,release-linux,release-windows]
+    steps:
+      - uses: actions/checkout@v4
       - name: Repository Dispatch
         uses: peter-evans/repository-dispatch@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           repository: xinyuli1204/ion-kit
           event-type: my-event
-          client-payload: '{"ION_KIT_VERSION": "1.0.0"}'
+          client-payload: '{"ION_KIT_VERSION": "33.0.0"}'
+    
+  
           
 
