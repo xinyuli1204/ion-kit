@@ -91,6 +91,8 @@ jobs:
                 ion-kit*.zip
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    outputs:
+      ION_KIT_VERSION: ${{ github.ref_name }}
 
   release-macos:
     runs-on: macos-latest-xlarge
@@ -123,4 +125,8 @@ jobs:
             ion-kit*.tar.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    outputs:
+      ION_KIT_VERSION: ${{ github.ref_name }}
+
 
