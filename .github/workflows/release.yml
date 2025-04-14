@@ -37,8 +37,6 @@ jobs:
       - name: Repository Dispatch
         uses: peter-evans/repository-dispatch@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          repository: xinyuli1204/ion-kit
           event-type: my-event
           client-payload: '{"ION_KIT_VERSION": "33.0.0"}'
     
