@@ -1,9 +1,7 @@
 name: Release
 
 on:
-  push:
-    tags:
-      - v*
+  push
 
 jobs:
   release-linux:
@@ -11,124 +9,42 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-
-      - name: Get latest CMake
-        uses: lukka/get-cmake@latest
-
-      - name: Install dependencies
-        run: |
-          # Packages
-          sudo apt-get update
-          sudo apt-get install -y doxygen curl build-essential
-          sudo apt-get clean
-          sudo rm -rf /var/lib/apt/lists/*
-
-      - name: Setup dependencies
-        run: |
-          # Halide
-          mkdir ${HOME}/Halide
-          curl -L https://github.com/halide/Halide/releases/download/v17.0.1/Halide-17.0.1-x86-64-linux-52541176253e74467dabc42eeee63d9a62c199f6.tar.gz | tar zx -C ${HOME}/Halide --strip-components 1
-          find ${HOME}/Halide -type d | xargs chmod 755
-
-          # zlib, libjpeg, libpng
-          vcpkg install
-
-      - name: Configure
-        run: cmake -D CMAKE_TOOLCHAIN_FILE=${VCPKG_INSTALLATION_ROOT}/scripts/buildsystems/vcpkg.cmake -D CMAKE_BUILD_TYPE=Release -D ION_BUILD_TEST=OFF -D ION_BUILD_EXAMPLE=OFF -D ION_BUNDLE_HALIDE=ON -D HalideHelpers_DIR=${HOME}/Halide/lib/cmake/HalideHelpers -D Halide_DIR=${HOME}/Halide/lib/cmake/Halide $GITHUB_WORKSPACE
-
-      - name: Build
-        run: cmake --build . --config Release --target package
-
-      - name: Release
-        uses: softprops/action-gh-release@v1
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v3
         with:
-          files: |
-            ion-kit*.tar.gz
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-    outputs:
-      ION_KIT_VERSION: ${{ github.ref_name }}
-      # MY_VAR: some_value
+          token: ${{ secrets.GITHUB_TOKEN }}
+          repository: xinyuli1204/ion-kit
+          event-type: my-event
+          client-payload: '{"ION_KIT_VERSION": "1.0.0"}'
+          
 
   release-windows:
     runs-on: windows-2019
 
     steps:
       - uses: actions/checkout@v4
-
-      - name: Get latest CMake
-        uses: lukka/get-cmake@latest
-
-      - name: Setup msbuild
-        uses: microsoft/setup-msbuild@v1
-
-      - name: Setup dependencies
-        shell: bash
-        run: |
-          # Halide
-          mkdir ${HOME}/Halide
-          curl -L https://github.com/halide/Halide/releases/download/v17.0.1/Halide-17.0.1-x86-64-windows-52541176253e74467dabc42eeee63d9a62c199f6.zip -o Halide.zip
-          unzip Halide.zip
-          rm Halide.zip
-          mv Halide*/* ${HOME}/Halide
-
-          # zlib, libjpeg, libpng
-          vcpkg install --triplet=x64-windows-static
-
-      - name: Configure
-        shell: bash
-        run: cmake -G "Visual Studio 16 2019" -A x64 -D VCPKG_TARGET_TRIPLET=x64-windows-static -D CMAKE_TOOLCHAIN_FILE=${VCPKG_INSTALLATION_ROOT}/scripts/buildsystems/vcpkg.cmake -D ION_BUILD_DOC=OFF -D ION_BUILD_TEST=OFF -D ION_BUILD_EXAMPLE=OFF -D ION_BUNDLE_HALIDE=ON -D HalideHelpers_DIR=${HOME}/Halide/lib/cmake/HalideHelpers -D Halide_DIR=${HOME}/Halide/lib/cmake/Halide $GITHUB_WORKSPACE
-
-      - name: Build
-        shell: bash
-        run: cmake --build . --config Release --target package
-
-      - name: Release
-        uses: softprops/action-gh-release@v1
+            
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v3
         with:
-            files: |
-                ion-kit*.zip
-        env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    outputs:
-      ION_KIT_VERSION: ${{ github.ref_name }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          repository: xinyuli1204/ion-kit
+          event-type: my-event
+          client-payload: '{"ION_KIT_VERSION": "1.0.0"}'
+          
 
   release-macos:
     runs-on: macos-latest
 
     steps:
       - uses: actions/checkout@v4
-
-      - name: Get latest CMake
-        uses: lukka/get-cmake@latest
-
-      - name: Setup dependencies
-        shell: bash
-        run: |
-            mkdir ${HOME}/Halide
-            curl -L https://github.com/halide/Halide/releases/download/v17.0.1/Halide-17.0.1-arm-64-osx-52541176253e74467dabc42eeee63d9a62c199f6.tar.gz | tar zx -C ${HOME}/Halide --strip-components 1
-            find ${HOME}/Halide -type d | xargs chmod 755
-
-            vcpkg install
-
-      - name: Configure
-        shell: bash
-        run: cmake -D CMAKE_BUILD_TYPE=Release -D CMAKE_TOOLCHAIN_FILE=${VCPKG_INSTALLATION_ROOT}/scripts/buildsystems/vcpkg.cmake -D ION_BUILD_TEST=OFF -D ION_BUILD_EXAMPLE=OFF -D ION_BUNDLE_HALIDE=ON -D HalideHelpers_DIR=${HOME}/Halide/lib/cmake/HalideHelpers -D Halide_DIR=${HOME}/Halide/lib/cmake/Halide $GITHUB_WORKSPACE
-
-      - name: Build
-        shell: bash
-        run: cmake --build . --config Release --target package
-
-      - name: Release
-        uses: softprops/action-gh-release@v1
+      
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v3
         with:
-          files: |
-            ion-kit*.tar.gz
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-    outputs:
-      ION_KIT_VERSION: ${{ github.ref_name }}
-
+          token: ${{ secrets.GITHUB_TOKEN }}
+          repository: xinyuli1204/ion-kit
+          event-type: my-event
+          client-payload: '{"ION_KIT_VERSION": "1.0.0"}'
+          
 
