@@ -25,11 +25,14 @@ jobs:
       - uses: actions/checkout@v4
 
 
-      # - name: GitHub Tag Name
-      #   run: |
-      #    echo "Tag name from GITHUB_REF_NAME: $GITHUB_REF_NAME"
-      #    echo "Tag name from github.ref_name: ${{  github.ref_name }}"
-      #    echo ${{ github.event.release.tag_name }}
+      - name: GitHub Tag Name
+        run: |
+         echo "Tag name from GITHUB_REF_NAME: $GITHUB_REF_NAME"
+         echo "Tag name from github.ref_name: ${{  github.ref_name }}"
+         echo ${{ github.event.release.tag_name }}
+         echo ${{ needs.Release.outputs.ION_KIT_VERSION }}
+         echo ${{ needs.release.outputs.ION_KIT_VERSION }}
+         
 
       - uses: robinraju/release-downloader@v1.9
         with:
