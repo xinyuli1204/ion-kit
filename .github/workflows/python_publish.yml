@@ -9,9 +9,10 @@
 name: Upload Python Package
 
 on:
-  release:
-    types: [released]
-
+  workflow_run:
+    workflows: ["Release"]  # The upstream workflow name
+    types:
+      - completed
 jobs:
   build_ion_python_wheels:
     name: Build wheels on ${{ matrix.os }}
@@ -35,15 +36,14 @@ jobs:
           repository: "xinyuli1204/ion-kit"
           latest: false
           fileName: "ion-kit*"
-          tag: ${{ github.event.release.tag_name }}
-        timeout-minutes: 5
-        continue-on-error: false
+          tag: ${{ needs.release.outputs.ION_KIT_VERSION }}
+
 
 
       - name: Copy macos file
         if: runner.os == 'macOS'
         run: |
-          export ION_KIT_VERSION=${{ github.event.release.tag_name }}
+          export ION_KIT_VERSION=${{ needs.release.outputs.ION_KIT_VERSION }}
           mkdir $GITHUB_WORKSPACE/macos
           tar xzf  ion-kit-*macos.tar.gz  -C $GITHUB_WORKSPACE/macos --strip-components 1
           cp  $GITHUB_WORKSPACE/macos/lib/libHalide.17.0.1.dylib python/ionpy/module/macos/libHalide.17.dylib
@@ -54,7 +54,7 @@ jobs:
       - name: Copy linux file
         if: runner.os == 'Linux'
         run: |
-          export ION_KIT_VERSION=${{ github.event.release.tag_name }}
+          export ION_KIT_VERSION=${{ needs.release.outputs.ION_KIT_VERSION }}
           mkdir $GITHUB_WORKSPACE/linux
           tar xzf  ion-kit-*linux.tar.gz  -C $GITHUB_WORKSPACE/linux --strip-components 1
           cp  $GITHUB_WORKSPACE/linux/lib/libion-bb.so python/ionpy/module/linux/libion-bb.so
@@ -66,7 +66,7 @@ jobs:
         if: runner.os == 'Windows'
         run: |
           mkdir windows
-          set ION_KIT_VERSION=${{ github.event.release.tag_name }}
+          set ION_KIT_VERSION=${{ needs.release.outputs.ION_KIT_VERSION }}
           unzip  ion-kit-*windows.zip  && mv ion-kit*/*  windows
           cp  windows/bin/Halide.dll python/ionpy/module/windows/Halide.dll
           cp  windows/bin/ion-core.dll python/ionpy/module/windows/ion-core.dll
@@ -91,7 +91,7 @@ jobs:
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: ""
           CIBW_SKIP: "*-win32 *i686 *musllinux*"
           CIBW_BUILD: cp39-*
-          CIBW_ENVIRONMENT: ION_KIT_VERSION=${{ github.event.release.tag_name }}
+          CIBW_ENVIRONMENT: ION_KIT_VERSION=${{ needs.release.outputs.ION_KIT_VERSION }}
 
 
       - uses: actions/upload-artifact@v4
@@ -121,7 +121,7 @@ jobs:
           repository: "xinyuli1204/ion-kit"
           latest: true
           fileName: "ion-kit*"
-          tag: ${{ github.event.release.tag_name }}
+          tag: ${{ needs.release.outputs.ION_KIT_VERSION }}
 
       - name: Copy macos file
         if: runner.os == 'macOS'
@@ -191,7 +191,7 @@ jobs:
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: ""
           CIBW_SKIP: "*-win32 *i686 *musllinux*"
           CIBW_BUILD: cp39-*
-          CIBW_ENVIRONMENT: ION_KIT_VERSION=${{ github.event.release.tag_name }} USE_CONTRIB=TRUE
+          CIBW_ENVIRONMENT: ION_KIT_VERSION=${{ needs.release.outputs.ION_KIT_VERSION }} USE_CONTRIB=TRUE
 
       - uses: actions/upload-artifact@v4
         with:
