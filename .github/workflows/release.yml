@@ -95,7 +95,7 @@ jobs:
       ION_KIT_VERSION: ${{ github.ref_name }}
 
   release-macos:
-    runs-on: macos-latest-xlarge
+    runs-on: macos-latest
 
     steps:
       - uses: actions/checkout@v4
