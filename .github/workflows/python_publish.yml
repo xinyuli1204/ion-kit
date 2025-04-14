@@ -32,10 +32,12 @@ jobs:
 
       - uses: robinraju/release-downloader@v1.9
         with:
-          repository: "fixstars/ion-kit"
+          repository: "xinyuli1204/ion-kit"
           latest: false
           fileName: "ion-kit*"
           tag: ${{ github.event.release.tag_name }}
+          timeout-minutes: 5
+          continue-on-error: false
 
 
       - name: Copy macos file
