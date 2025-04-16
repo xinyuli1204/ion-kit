@@ -23,6 +23,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      - name: Setup dependencies
+        shell: bash
+        run: |
+          # Halide
+          curl --fail https://github.com/halide/Halide/releases/download/v17.0.1/Halide-1
+  
+
 
  
   release-macos:
