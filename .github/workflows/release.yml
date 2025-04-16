@@ -27,7 +27,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Setup dependencies
         run: |
-          export ION_KIT_VERSION=v123
+          $ION_KIT_VERSION = "${{ github.event.release.tag_name }}"
           if (-not (Get-ChildItem -Path . -Filter "ion-kit-*linux.tar.gz" -ErrorAction SilentlyContinue)) {
             Write-Host "Error: ion-kit $ION_KIT_VERSION  windows pakage is missing"
             exit 1
