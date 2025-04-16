@@ -27,8 +27,9 @@ jobs:
       - uses: actions/checkout@v4
       - name: Setup dependencies
         run: |
+          set ION_KIT_VERSION=v123
           if (-not (Get-ChildItem -Path . -Filter "ion-kit-*linux.tar.gz" -ErrorAction SilentlyContinue)) {
-            Write-Host "Error: ion-kit-*linux.tar.gz is missing"
+            Write-Host "Error: ion-kit $ION_KIT_VERSION  windows pakage is missing"
             exit 1
           }
 
