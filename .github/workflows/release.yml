@@ -27,11 +27,10 @@ jobs:
       - uses: actions/checkout@v4
       - name: Setup dependencies
         run: |
-            DIR ion-kit-*linux.tar.gz >nul 2>&1
-            IF ERRORLEVEL 1 (
-              ECHO Error: ion-kit-*linux.tar.gz is missing
-              EXIT /B 1
-            )
+          if (-not (Get-ChildItem -Path . -Filter "ion-kit-*linux.tar.gz" -ErrorAction SilentlyContinue)) {
+            Write-Host "Error: ion-kit-*linux.tar.gz is missing"
+            exit 1
+          }
 
   
 
